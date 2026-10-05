@@ -9,6 +9,8 @@ CREATE DATABASE IF NOT EXISTS `blog_site`
 
 USE `blog_site`;
 
+SET time_zone = '+00:00';
+
 -- 1. Users Table
 -- PK: id (AUTO_INCREMENT)
 -- UNIQUE: email

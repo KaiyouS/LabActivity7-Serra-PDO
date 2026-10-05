@@ -209,9 +209,9 @@ require __DIR__ . '/header.php';
                     <?php if ($isPostOwner): ?>
                         <em>(You)</em>
                     <?php endif; ?>
-                    &middot; Posted on <?= format_date($post['created_at']) ?>
+                    &middot; Posted on <time datetime="<?= iso_date($post['created_at']) ?>"><?= format_date($post['created_at']) ?></time>
                     <?php if ($isEdited): ?>
-                        <strong>(edited)</strong>
+                        <time datetime="<?= iso_date($post['updated_at']) ?>" data-edited-marker="true" title="Edited on <?= format_date($post['updated_at']) ?>"><strong>(edited)</strong></time>
                     <?php endif; ?>
                 </small>
             </p>
@@ -245,9 +245,9 @@ require __DIR__ . '/header.php';
                                     <em>(You)</em>
                                 <?php endif; ?>
                                 <small>
-                                    &middot; <?= format_date($comment['created_at']) ?>
+                                    &middot; <time datetime="<?= iso_date($comment['created_at']) ?>"><?= format_date($comment['created_at']) ?></time>
                                     <?php if ($isCommentEdited): ?>
-                                        <strong>(edited)</strong>
+                                        <time datetime="<?= iso_date($comment['updated_at']) ?>" data-edited-marker="true" title="Edited on <?= format_date($comment['updated_at']) ?>"><strong>(edited)</strong></time>
                                     <?php endif; ?>
                                 </small>
                                 <p><?= nl2br(e($comment['content'])) ?></p>

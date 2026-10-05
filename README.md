@@ -42,6 +42,7 @@ A simple, secure, text-only blog website built with PHP 8.3 and MySQL PDO, featu
 * **Edited Markers**:
   * An `(edited)` tag is displayed on posts if they have been updated (`updated_at IS NOT NULL`).
   * An `(edited)` tag is displayed on comments if they have been updated (`updated_at IS NOT NULL`).
+* **Timezone Synchronization**: Database sessions and PHP operations are strictly anchored to UTC (`SET time_zone = '+00:00'`). Timestamps are output using semantic `<time datetime="...">` tags and dynamically formatted according to the user's browser default timezone, preventing timezone skew.
 * **XSS Defense**: All dynamic user inputs are safely escaped using `htmlspecialchars()` prior to rendering.
 
 ---
@@ -54,6 +55,8 @@ CREATE DATABASE IF NOT EXISTS `blog_site`
   COLLATE utf8mb4_unicode_ci;
 
 USE `blog_site`;
+
+SET time_zone = '+00:00';
 
 CREATE TABLE IF NOT EXISTS `users` (
   `id` BIGINT UNSIGNED NOT NULL AUTO_INCREMENT,
