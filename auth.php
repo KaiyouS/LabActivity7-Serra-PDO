@@ -159,9 +159,9 @@ function iso_date(string $datetime): string
 
 /**
  * Format UTC timestamp into human-readable relative time or formatted date
- * converted to the client's detected browser timezone
+ * converted to the client's detected browser timezone with grammatically correct wording
  */
-function format_date(string $datetime): string
+function format_date(string $datetime, bool $withPostedPrefix = false): string
 {
     try {
         $time = new DateTime($datetime, new DateTimeZone('UTC'));
@@ -171,11 +171,34 @@ function format_date(string $datetime): string
         $now = new DateTime('now', $clientTz);
         $diffSec = $now->getTimestamp() - $time->getTimestamp();
 
+        if ($withPostedPrefix) {
+            if ($diffSec < 60) {
+                return 'Posted just now';
+            }
+            if ($diffSec < 3600) {
+                $mins = max(1, (int) floor($diffSec / 60));
+                return $mins === 1 ? 'Posted 1 minute ago' : "Posted {$mins} minutes ago";
+            }
+            if ($diffSec < 86400) {
+                $hours = (int) floor($diffSec / 3600);
+                return $hours === 1 ? 'Posted 1 hour ago' : "Posted {$hours} hours ago";
+            }
+            if ($diffSec < 172800) {
+                return 'Posted yesterday at ' . $time->format('g:i A');
+            }
+            if ($diffSec < 604800) {
+                $days = (int) floor($diffSec / 86400);
+                return $days === 1 ? 'Posted 1 day ago' : "Posted {$days} days ago";
+            }
+            return 'Posted on ' . $time->format('M j, Y \a\t g:i A');
+        }
+
+        // Without prefix (e.g. for comments)
         if ($diffSec < 60) {
             return 'Just now';
         }
         if ($diffSec < 3600) {
-            $mins = (int) floor($diffSec / 60);
+            $mins = max(1, (int) floor($diffSec / 60));
             return $mins === 1 ? '1 minute ago' : "{$mins} minutes ago";
         }
         if ($diffSec < 86400) {
@@ -187,7 +210,7 @@ function format_date(string $datetime): string
         }
         if ($diffSec < 604800) {
             $days = (int) floor($diffSec / 86400);
-            return "{$days} days ago";
+            return $days === 1 ? '1 day ago' : "{$days} days ago";
         }
         return $time->format('M j, Y \a\t g:i A');
     } catch (Exception) {

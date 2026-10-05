@@ -230,7 +230,7 @@ require __DIR__ . '/header.php';
                     <?php if ($isPostOwner): ?>
                         <em>(You)</em>
                     <?php endif; ?>
-                    &middot; Posted on <time datetime="<?= iso_date($post['created_at']) ?>"><?= format_date($post['created_at']) ?></time>
+                    &middot; <time datetime="<?= iso_date($post['created_at']) ?>" data-prefix="posted"><?= format_date($post['created_at'], true) ?></time>
                     <?php if ($isEdited): ?>
                         <time datetime="<?= iso_date($post['updated_at']) ?>" data-edited-marker="true" title="Edited on <?= format_date($post['updated_at']) ?>"><strong>(edited)</strong></time>
                     <?php endif; ?>

@@ -35,22 +35,43 @@
                     return;
                 }
 
+                const hasPostedPrefix = el.getAttribute('data-prefix') === 'posted';
+
                 let text = '';
-                if (diffSec < 60) {
-                    text = 'Just now';
-                } else if (diffSec < 3600) {
-                    const mins = Math.floor(diffSec / 60);
-                    text = mins === 1 ? '1 minute ago' : mins + ' minutes ago';
-                } else if (diffSec < 86400) {
-                    const hours = Math.floor(diffSec / 3600);
-                    text = hours === 1 ? '1 hour ago' : hours + ' hours ago';
-                } else if (diffSec < 172800) {
-                    text = 'Yesterday at ' + date.toLocaleTimeString([], { hour: 'numeric', minute: '2-digit' });
-                } else if (diffSec < 604800) {
-                    const days = Math.floor(diffSec / 86400);
-                    text = days + ' days ago';
+                if (hasPostedPrefix) {
+                    if (diffSec < 60) {
+                        text = 'Posted just now';
+                    } else if (diffSec < 3600) {
+                        const mins = Math.max(1, Math.floor(diffSec / 60));
+                        text = mins === 1 ? 'Posted 1 minute ago' : 'Posted ' + mins + ' minutes ago';
+                    } else if (diffSec < 86400) {
+                        const hours = Math.floor(diffSec / 3600);
+                        text = hours === 1 ? 'Posted 1 hour ago' : 'Posted ' + hours + ' hours ago';
+                    } else if (diffSec < 172800) {
+                        text = 'Posted yesterday at ' + date.toLocaleTimeString([], { hour: 'numeric', minute: '2-digit' });
+                    } else if (diffSec < 604800) {
+                        const days = Math.floor(diffSec / 86400);
+                        text = days === 1 ? 'Posted 1 day ago' : 'Posted ' + days + ' days ago';
+                    } else {
+                        text = 'Posted on ' + date.toLocaleDateString([], { month: 'short', day: 'numeric', year: 'numeric' }) + ' at ' + date.toLocaleTimeString([], { hour: 'numeric', minute: '2-digit' });
+                    }
                 } else {
-                    text = date.toLocaleDateString([], { month: 'short', day: 'numeric', year: 'numeric' }) + ' at ' + date.toLocaleTimeString([], { hour: 'numeric', minute: '2-digit' });
+                    if (diffSec < 60) {
+                        text = 'Just now';
+                    } else if (diffSec < 3600) {
+                        const mins = Math.max(1, Math.floor(diffSec / 60));
+                        text = mins === 1 ? '1 minute ago' : mins + ' minutes ago';
+                    } else if (diffSec < 86400) {
+                        const hours = Math.floor(diffSec / 3600);
+                        text = hours === 1 ? '1 hour ago' : hours + ' hours ago';
+                    } else if (diffSec < 172800) {
+                        text = 'Yesterday at ' + date.toLocaleTimeString([], { hour: 'numeric', minute: '2-digit' });
+                    } else if (diffSec < 604800) {
+                        const days = Math.floor(diffSec / 86400);
+                        text = days === 1 ? '1 day ago' : days + ' days ago';
+                    } else {
+                        text = date.toLocaleDateString([], { month: 'short', day: 'numeric', year: 'numeric' }) + ' at ' + date.toLocaleTimeString([], { hour: 'numeric', minute: '2-digit' });
+                    }
                 }
 
                 el.textContent = text;
