@@ -68,16 +68,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             ':password' => $hashedPassword,
         ]);
 
-        $newUserId = (int) $pdo->lastInsertId();
-
-        // Regenerate session ID on privilege change for security
-        session_regenerate_id(true);
-        $_SESSION['user_id']  = $newUserId;
-        $_SESSION['username'] = $username;
-        $_SESSION['email']    = $email;
-
-        set_flash('success', "Welcome to BlogSite, {$username}! Your account has been created.");
-        header('Location: index.php');
+        set_flash('success', 'Your account has been created successfully! Please sign in with your credentials.');
+        header('Location: login.php');
         exit;
     }
 }
