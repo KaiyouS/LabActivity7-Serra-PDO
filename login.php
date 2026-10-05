@@ -56,7 +56,9 @@ require __DIR__ . '/header.php';
 <p>Enter your credentials to access your news feed.</p>
 
 <?php if (isset($errors['auth'])): ?>
-    <p><strong>Error:</strong> <?= e($errors['auth']) ?></p>
+    <div class="flash-notice flash-error">
+        <p><strong>[ERROR]:</strong> <?= e($errors['auth']) ?></p>
+    </div>
 <?php endif; ?>
 
 <form method="POST" action="login.php">

@@ -1,0 +1,689 @@
+/* ==========================================================================
+   Lab Activity 7: Neobrutalist / Indie Web Design System
+   High-contrast borders, tactile offset drop-shadows, playful energetic accents
+   ========================================================================== */
+
+/* --- 1. Neobrutalist Tokens & Variables --- */
+:root {
+    --bg: #faf7f0;
+    --surface: #ffffff;
+    --surface-alt: #f1ede4;
+    
+    --border: #000000;
+    --border-w: 2.5px;
+    --border-w-sm: 1.75px;
+    
+    --shadow-distance: 4px;
+    --shadow-distance-sm: 2.5px;
+    --shadow: var(--shadow-distance) var(--shadow-distance) 0px #000000;
+    --shadow-sm: var(--shadow-distance-sm) var(--shadow-distance-sm) 0px #000000;
+    --shadow-hover: 6px 6px 0px #000000;
+    --shadow-active: 1px 1px 0px #000000;
+    
+    /* Vibrant Indie Palette */
+    --accent-yellow: #fde047;
+    --accent-purple: #e9d5ff;
+    --accent-blue: #bae6fd;
+    --accent-mint: #bbf7d0;
+    --accent-coral: #fed7aa;
+    --accent-pink: #fbcfe8;
+    
+    --text-main: #0a0a0a;
+    --text-muted: #4b5563;
+    
+    --danger-bg: #fecaca;
+    --danger-text: #991b1b;
+    --success-bg: #bbf7d0;
+    --success-text: #166534;
+    
+    /* Typography */
+    --font-heading: "Space Grotesk", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    --font-body: "Plus Jakarta Sans", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    --font-mono: "Space Mono", "JetBrains Mono", Consolas, monospace;
+    
+    --radius-sm: 4px;
+    --radius: 8px;
+    --radius-lg: 12px;
+    --measure: 72ch;
+}
+
+/* --- 2. Base Document Resets --- */
+*, *::before, *::after {
+    box-sizing: border-box;
+}
+
+html {
+    font-size: 16px;
+    background-color: var(--bg);
+    color: var(--text-main);
+    text-rendering: optimizeLegibility;
+    -webkit-font-smoothing: antialiased;
+}
+
+body {
+    margin: 0;
+    padding: 0;
+    font-family: var(--font-body);
+    font-size: 1rem;
+    line-height: 1.6;
+    color: var(--text-main);
+    background-color: var(--bg);
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+/* Central Content Container */
+header, main, footer {
+    width: 100%;
+    max-width: var(--measure);
+    margin-left: auto;
+    margin-right: auto;
+    padding-left: clamp(1rem, 4vw, 2rem);
+    padding-right: clamp(1rem, 4vw, 2rem);
+}
+
+main {
+    flex: 1;
+    padding-top: 2rem;
+    padding-bottom: 4rem;
+}
+
+/* --- 3. Neobrutalist Header & Nav Bar --- */
+header {
+    padding-top: 1.75rem;
+    padding-bottom: 1.5rem;
+    border-bottom: var(--border-w) solid var(--border);
+    background-color: var(--bg);
+}
+
+header h1 {
+    font-family: var(--font-heading);
+    font-size: clamp(1.8rem, 4vw, 2.4rem);
+    font-weight: 700;
+    letter-spacing: -0.03em;
+    margin: 0 0 0.85rem 0;
+    display: flex;
+    align-items: center;
+    gap: 0.65rem;
+    flex-wrap: wrap;
+}
+
+header h1::before {
+    content: "⚡";
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 2.2rem;
+    height: 2.2rem;
+    background: var(--accent-yellow);
+    border: var(--border-w) solid var(--border);
+    border-radius: var(--radius-sm);
+    box-shadow: var(--shadow-sm);
+    font-size: 1.15rem;
+}
+
+header h1::after {
+    content: "PDO EDITION";
+    font-family: var(--font-mono);
+    font-size: 0.72rem;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    background: var(--accent-blue);
+    border: var(--border-w-sm) solid var(--border);
+    border-radius: var(--radius-sm);
+    box-shadow: 2px 2px 0px #000;
+    padding: 0.2rem 0.5rem;
+    vertical-align: middle;
+}
+
+nav {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0.5rem 0.85rem;
+    font-family: var(--font-mono);
+    font-size: 0.88rem;
+    font-weight: 600;
+}
+
+nav span:first-child {
+    background: var(--surface);
+    border: var(--border-w-sm) solid var(--border);
+    padding: 0.3rem 0.65rem;
+    border-radius: var(--radius-sm);
+    box-shadow: 2px 2px 0px #000;
+}
+
+nav a {
+    background: var(--surface);
+    color: var(--text-main);
+    border: var(--border-w-sm) solid var(--border);
+    padding: 0.3rem 0.75rem;
+    border-radius: var(--radius-sm);
+    box-shadow: 2px 2px 0px #000;
+    text-decoration: none;
+    font-weight: 700;
+    transition: transform 0.1s ease, box-shadow 0.1s ease, background-color 0.1s ease;
+}
+
+nav a:hover {
+    background: var(--accent-yellow);
+    transform: translate(-1px, -1px);
+    box-shadow: 3px 3px 0px #000;
+}
+
+nav a:active {
+    transform: translate(1px, 1px);
+    box-shadow: 1px 1px 0px #000;
+}
+
+nav a[href="logout.php"] {
+    background: var(--danger-bg);
+    color: var(--danger-text);
+}
+
+nav a[href="logout.php"]:hover {
+    background: #f87171;
+    color: #000;
+}
+
+/* --- 4. Chunky Typography --- */
+h2, h3, h4, h5 {
+    font-family: var(--font-heading);
+    color: var(--text-main);
+    font-weight: 700;
+    letter-spacing: -0.02em;
+    line-height: 1.25;
+    margin-top: 1.75rem;
+    margin-bottom: 0.65rem;
+}
+
+h2 {
+    font-size: clamp(1.5rem, 3vw, 2rem);
+}
+
+h3 {
+    font-size: clamp(1.25rem, 2.5vw, 1.6rem);
+}
+
+h4 {
+    font-size: 1.35rem;
+    margin-top: 0;
+    margin-bottom: 0.4rem;
+}
+
+h5 {
+    font-size: 1rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    font-family: var(--font-mono);
+}
+
+p {
+    margin: 0 0 1rem 0;
+}
+
+/* Semantic Rule */
+hr {
+    border: 0;
+    height: 3px;
+    background-color: var(--border);
+    margin: 2.25rem 0;
+}
+
+article + hr,
+main + hr {
+    display: none;
+}
+
+/* --- 5. Fieldset, Legends & Forms --- */
+form {
+    margin: 1.5rem 0;
+}
+
+fieldset {
+    background-color: var(--surface);
+    border: var(--border-w) solid var(--border);
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow);
+    padding: 1.5rem 1.5rem 1.25rem 1.5rem;
+    margin: 0 0 1.75rem 0;
+}
+
+legend {
+    font-family: var(--font-heading);
+    font-size: 0.95rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    background-color: var(--accent-yellow);
+    color: #000;
+    border: var(--border-w) solid var(--border);
+    border-radius: var(--radius-sm);
+    box-shadow: 2px 2px 0px #000;
+    padding: 0.35rem 0.85rem;
+}
+
+label {
+    display: block;
+    font-family: var(--font-heading);
+    font-size: 0.92rem;
+    font-weight: 700;
+    color: var(--text-main);
+    margin-bottom: 0.35rem;
+}
+
+input[type="text"],
+input[type="email"],
+input[type="password"],
+textarea {
+    width: 100%;
+    max-width: 100%;
+    font-family: var(--font-body);
+    font-size: 0.98rem;
+    padding: 0.65rem 0.85rem;
+    background-color: #ffffff;
+    color: var(--text-main);
+    border: var(--border-w) solid var(--border);
+    border-radius: var(--radius);
+    box-shadow: var(--shadow-sm);
+    outline: none;
+    transition: transform 0.1s ease, box-shadow 0.1s ease, background-color 0.1s ease;
+}
+
+input[type="text"]:focus,
+input[type="email"]:focus,
+input[type="password"]:focus,
+textarea:focus {
+    box-shadow: 4px 4px 0px #000;
+    transform: translate(-1px, -1px);
+    background-color: #fffdf5;
+}
+
+textarea {
+    min-height: 90px;
+    resize: vertical;
+}
+
+/* Playful Tactile Buttons */
+button,
+input[type="submit"] {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-family: var(--font-heading);
+    font-size: 0.95rem;
+    font-weight: 700;
+    letter-spacing: -0.01em;
+    padding: 0.65rem 1.35rem;
+    background-color: var(--accent-yellow);
+    color: #000000;
+    border: var(--border-w) solid var(--border);
+    border-radius: var(--radius);
+    box-shadow: var(--shadow);
+    cursor: pointer;
+    transition: transform 0.08s ease, box-shadow 0.08s ease, background-color 0.1s ease;
+}
+
+button:hover,
+input[type="submit"]:hover {
+    background-color: #facc15;
+    transform: translate(-2px, -2px);
+    box-shadow: var(--shadow-hover);
+}
+
+button:active,
+input[type="submit"]:active {
+    transform: translate(2px, 2px);
+    box-shadow: var(--shadow-active);
+}
+
+/* Secondary Actions / Cancel Links */
+a:not(nav a) {
+    color: var(--text-main);
+    font-weight: 700;
+    text-decoration: underline;
+    text-decoration-thickness: 2px;
+    text-underline-offset: 3px;
+    transition: background-color 0.1s ease;
+}
+
+a:not(nav a):hover {
+    background-color: var(--accent-yellow);
+}
+
+/* Edit action links styled as tactile mini buttons */
+article a[href*="edit_post"],
+li a[href*="edit_comment"] {
+    display: inline-block;
+    background-color: var(--accent-yellow);
+    color: #000;
+    border: var(--border-w-sm) solid var(--border);
+    box-shadow: 2px 2px 0px #000;
+    padding: 0.25rem 0.6rem;
+    font-size: 0.8rem;
+    border-radius: var(--radius-sm);
+    font-family: var(--font-mono);
+    font-weight: 700;
+    text-decoration: none;
+    transition: transform 0.08s ease, box-shadow 0.08s ease, background-color 0.1s ease;
+}
+
+article a[href*="edit_post"]:hover,
+li a[href*="edit_comment"]:hover {
+    background-color: #facc15;
+    transform: translate(-1px, -1px);
+    box-shadow: 3px 3px 0px #000;
+}
+
+article a[href*="edit_post"]:active,
+li a[href*="edit_comment"]:active {
+    transform: translate(1px, 1px);
+    box-shadow: 1px 1px 0px #000;
+}
+
+/* Back links */
+a[href*="index.php"]:not(nav a) {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.35rem;
+    background: var(--surface);
+    border: var(--border-w-sm) solid var(--border);
+    padding: 0.35rem 0.75rem;
+    border-radius: var(--radius-sm);
+    box-shadow: 2px 2px 0px #000;
+    text-decoration: none;
+    font-family: var(--font-mono);
+    font-size: 0.85rem;
+    font-weight: 700;
+    margin-bottom: 1rem;
+    transition: transform 0.08s ease, box-shadow 0.08s ease, background-color 0.1s ease;
+}
+
+a[href*="index.php"]:not(nav a):hover {
+    background: var(--accent-yellow);
+    transform: translate(-1px, -1px);
+    box-shadow: 3px 3px 0px #000;
+}
+
+a[href*="index.php"]:not(nav a):active {
+    transform: translate(1px, 1px);
+    box-shadow: 1px 1px 0px #000;
+}
+
+/* Inline Form Actions (e.g. Delete Button) */
+article form,
+li form {
+    display: inline-block;
+    margin: 0;
+}
+
+article form button,
+li form button {
+    background-color: var(--danger-bg);
+    color: var(--danger-text);
+    border: var(--border-w-sm) solid var(--border);
+    box-shadow: 2px 2px 0px #000;
+    padding: 0.25rem 0.6rem;
+    font-size: 0.8rem;
+    border-radius: var(--radius-sm);
+    margin-left: 0.5rem;
+    font-family: var(--font-mono);
+    text-decoration: none;
+}
+
+article form button:hover,
+li form button:hover {
+    background-color: #f87171;
+    color: #000;
+    box-shadow: 3px 3px 0px #000;
+    transform: translate(-1px, -1px);
+}
+
+article form button:active,
+li form button:active {
+    transform: translate(1px, 1px);
+    box-shadow: 1px 1px 0px #000;
+}
+
+/* --- 6. Articles & Post Cards --- */
+article {
+    background-color: var(--surface);
+    border: var(--border-w) solid var(--border);
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow);
+    padding: 1.5rem clamp(1.2rem, 3vw, 1.75rem);
+    margin-bottom: 2.25rem;
+    transition: transform 0.15s ease, box-shadow 0.15s ease;
+}
+
+article:hover {
+    transform: translate(-2px, -2px);
+    box-shadow: var(--shadow-hover);
+}
+
+article h4 {
+    background: var(--surface);
+    display: inline-block;
+}
+
+/* Byline Metadata */
+article > p:first-of-type small {
+    display: inline-flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0.45rem;
+    font-family: var(--font-mono);
+    font-size: 0.82rem;
+    color: var(--text-muted);
+    background: var(--surface-alt);
+    border: var(--border-w-sm) solid var(--border);
+    border-radius: var(--radius-sm);
+    padding: 0.25rem 0.55rem;
+    box-shadow: 2px 2px 0px #000;
+    margin-bottom: 0.75rem;
+}
+
+article > p:first-of-type small strong {
+    color: #000;
+}
+
+/* (edited) Sticker / Badge */
+time[data-edited-marker="true"] {
+    display: inline-flex;
+    align-items: center;
+    font-family: var(--font-mono);
+    font-size: 0.72rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    background-color: var(--accent-coral);
+    color: #000;
+    border: var(--border-w-sm) solid var(--border);
+    border-radius: var(--radius-sm);
+    box-shadow: 1.5px 1.5px 0px #000;
+    padding: 0.1rem 0.4rem;
+    cursor: help;
+}
+
+time[data-edited-marker="true"] strong {
+    font-weight: 700;
+}
+
+/* --- 7. Comments Section --- */
+article section {
+    margin-top: 1.75rem;
+    padding-top: 1.25rem;
+    border-top: 2px dashed var(--border);
+}
+
+article section h5 {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+article section h5::before {
+    content: "💬";
+}
+
+article section ul {
+    list-style: none;
+    padding: 0;
+    margin: 1rem 0;
+}
+
+article section li {
+    background-color: #ffffff;
+    border: var(--border-w) solid var(--border);
+    border-radius: var(--radius);
+    box-shadow: var(--shadow-sm);
+    padding: 0.85rem 1rem;
+    margin-bottom: 1rem;
+    font-size: 0.92rem;
+    transition: transform 0.1s ease;
+}
+
+article section li:hover {
+    transform: translate(-1px, -1px);
+}
+
+article section li strong {
+    font-family: var(--font-heading);
+    font-size: 0.95rem;
+    color: #000;
+}
+
+article section li small {
+    font-family: var(--font-mono);
+    font-size: 0.78rem;
+    color: var(--text-muted);
+}
+
+article section li p {
+    margin: 0.45rem 0 0.4rem 0;
+    line-height: 1.5;
+}
+
+article section fieldset {
+    background-color: var(--surface-alt);
+    padding: 1.15rem;
+    margin-top: 1.25rem;
+    box-shadow: var(--shadow-sm);
+}
+
+article section legend {
+    background-color: var(--accent-mint);
+    font-size: 0.82rem;
+}
+
+article section textarea {
+    min-height: 65px;
+    font-size: 0.92rem;
+}
+
+article section button {
+    background-color: var(--accent-mint);
+    padding: 0.5rem 1.15rem;
+    font-size: 0.88rem;
+}
+
+/* --- 8. Flash & Notice Banners --- */
+.flash-notice,
+header + div {
+    background-color: var(--accent-blue);
+    border: var(--border-w) solid var(--border);
+    border-radius: var(--radius);
+    box-shadow: var(--shadow);
+    padding: 0.85rem 1.25rem;
+    margin: 1.5rem auto 0 auto;
+    max-width: var(--measure);
+    font-family: var(--font-mono);
+    font-weight: 700;
+    font-size: 0.9rem;
+}
+
+.flash-notice p,
+header + div p {
+    margin: 0;
+}
+
+.flash-success {
+    background-color: var(--accent-mint);
+    color: #064e3b;
+}
+
+.flash-error {
+    background-color: var(--danger-bg);
+    color: var(--danger-text);
+}
+
+/* Validation Errors Container */
+.error-summary,
+form > div:first-child:has(ul),
+main > div:has(ul) {
+    background-color: var(--danger-bg);
+    border: var(--border-w) solid var(--border);
+    border-radius: var(--radius);
+    box-shadow: var(--shadow);
+    padding: 1rem 1.35rem;
+    margin-bottom: 1.5rem;
+    color: var(--danger-text);
+}
+
+form > div:first-child:has(ul) strong,
+main > div:has(ul) strong {
+    font-family: var(--font-heading);
+    font-size: 1rem;
+    color: #000;
+}
+
+form > div:first-child:has(ul) ul,
+main > div:has(ul) ul {
+    margin: 0.5rem 0 0 1.2rem;
+    padding: 0;
+    font-family: var(--font-mono);
+    font-size: 0.88rem;
+}
+
+small:has(strong) {
+    background: var(--danger-bg);
+    border: var(--border-w-sm) solid var(--border);
+    color: var(--danger-text);
+    padding: 0.15rem 0.45rem;
+    border-radius: var(--radius-sm);
+    display: inline-block;
+    margin-top: 0.25rem;
+    font-family: var(--font-mono);
+    font-size: 0.78rem;
+}
+
+/* --- 9. Footer --- */
+footer {
+    padding-top: 2rem;
+    padding-bottom: 3rem;
+    text-align: center;
+    border-top: var(--border-w) solid var(--border);
+    font-family: var(--font-mono);
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: var(--text-muted);
+}
+
+footer p {
+    margin: 0;
+}
+
+/* Responsive */
+@media (max-width: 600px) {
+    :root {
+        --shadow-distance: 3px;
+    }
+    header h1 {
+        font-size: 1.6rem;
+    }
+    fieldset, article {
+        padding: 1.25rem 1rem;
+    }
+}
