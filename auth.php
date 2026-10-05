@@ -38,37 +38,63 @@ function get_client_timezone(): DateTimeZone
 }
 
 /**
- * Check if a user is currently authenticated
+ * Get the currently logged-in user data verified against the database.
+ * If the session holds an ID of a deleted user, the stale session is cleanly cleared.
  */
-function is_logged_in(): bool
+function current_user(?PDO $pdo = null): ?array
 {
-    return !empty($_SESSION['user_id']);
-}
-
-/**
- * Get the currently logged-in user data from session
- */
-function current_user(): ?array
-{
-    if (!is_logged_in()) {
+    if (empty($_SESSION['user_id'])) {
         return null;
     }
 
+    if ($pdo === null) {
+        require __DIR__ . '/db.php';
+    }
+
+    $stmt = $pdo->prepare('SELECT id, username, email FROM users WHERE id = :id LIMIT 1');
+    $stmt->execute([':id' => (int) $_SESSION['user_id']]);
+    $user = $stmt->fetch();
+
+    if (!$user) {
+        // Stale session pointing to non-existent user in database
+        $_SESSION = [];
+        return null;
+    }
+
+    $_SESSION['username'] = (string) $user['username'];
+    $_SESSION['email']    = (string) $user['email'];
+
     return [
-        'id'       => (int) $_SESSION['user_id'],
-        'username' => (string) ($_SESSION['username'] ?? ''),
-        'email'    => (string) ($_SESSION['email'] ?? ''),
+        'id'       => (int) $user['id'],
+        'username' => (string) $user['username'],
+        'email'    => (string) $user['email'],
     ];
 }
 
 /**
- * Enforce that the user MUST be authenticated.
- * Redirects unauthenticated visitors to login.php.
+ * Check if a user is currently authenticated with a valid database record
  */
-function require_auth(): void
+function is_logged_in(?PDO $pdo = null): bool
 {
-    if (!is_logged_in()) {
+    return current_user($pdo) !== null;
+}
+
+/**
+ * Enforce that the user MUST be authenticated.
+ * If the session is missing or points to a non-existent user in the database,
+ * redirects unauthenticated visitors to login.php.
+ */
+function require_auth(?PDO $pdo = null): void
+{
+    if (empty($_SESSION['user_id'])) {
         set_flash('error', 'Please log in to access this page.');
+        header('Location: login.php');
+        exit;
+    }
+
+    $user = current_user($pdo);
+    if (!$user) {
+        set_flash('error', 'Your session has expired or your account was not found. Please log in or register again.');
         header('Location: login.php');
         exit;
     }
@@ -78,9 +104,9 @@ function require_auth(): void
  * Enforce that the user MUST be a guest (unauthenticated).
  * Redirects already logged-in users to the home feed.
  */
-function require_guest(): void
+function require_guest(?PDO $pdo = null): void
 {
-    if (is_logged_in()) {
+    if (is_logged_in($pdo)) {
         header('Location: index.php');
         exit;
     }

@@ -34,16 +34,27 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         }
 
         if (empty($postErrors)) {
-            $stmt = $pdo->prepare('INSERT INTO posts (user_id, title, content) VALUES (:user_id, :title, :content)');
-            $stmt->execute([
-                ':user_id' => $currentUser['id'],
-                ':title'   => $title,
-                ':content' => $content,
-            ]);
+            try {
+                $stmt = $pdo->prepare('INSERT INTO posts (user_id, title, content) VALUES (:user_id, :title, :content)');
+                $stmt->execute([
+                    ':user_id' => $currentUser['id'],
+                    ':title'   => $title,
+                    ':content' => $content,
+                ]);
 
-            set_flash('success', 'Your blog post was successfully published!');
-            header('Location: index.php');
-            exit;
+                set_flash('success', 'Your blog post was successfully published!');
+                header('Location: index.php');
+                exit;
+            } catch (PDOException $e) {
+                // If user foreign key constraint fails, session is stale
+                if ($e->getCode() === '23000') {
+                    $_SESSION = [];
+                    set_flash('error', 'Your session has expired. Please log in or register a new account.');
+                    header('Location: login.php');
+                    exit;
+                }
+                throw $e;
+            }
         }
     }
 
@@ -70,16 +81,26 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         }
 
         if (empty($commentErrors)) {
-            $stmt = $pdo->prepare('INSERT INTO comments (post_id, user_id, content) VALUES (:post_id, :user_id, :content)');
-            $stmt->execute([
-                ':post_id' => $postId,
-                ':user_id' => $currentUser['id'],
-                ':content' => $content,
-            ]);
+            try {
+                $stmt = $pdo->prepare('INSERT INTO comments (post_id, user_id, content) VALUES (:post_id, :user_id, :content)');
+                $stmt->execute([
+                    ':post_id' => $postId,
+                    ':user_id' => $currentUser['id'],
+                    ':content' => $content,
+                ]);
 
-            set_flash('success', 'Your comment has been posted.');
-            header("Location: index.php#post-{$postId}");
-            exit;
+                set_flash('success', 'Your comment has been posted.');
+                header("Location: index.php#post-{$postId}");
+                exit;
+            } catch (PDOException $e) {
+                if ($e->getCode() === '23000') {
+                    $_SESSION = [];
+                    set_flash('error', 'Your session has expired. Please log in or register a new account.');
+                    header('Location: login.php');
+                    exit;
+                }
+                throw $e;
+            }
         }
     }
 }
