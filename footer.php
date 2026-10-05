@@ -1,7 +1,9 @@
     </main>
-    <hr>
-    <footer>
-        <p><small>&copy; <?= date('Y') ?> Lab Activity 7 - Relational Databases (RDBMS) &amp; PDO Core</small></p>
+    <footer class="site-footer">
+        <p>
+            <span class="material-symbols-outlined footer-icon">terminal</span>
+            <small>&copy; <?= date('Y') ?> Lab Activity 7 &middot; Relational Databases (RDBMS) &amp; PDO Core</small>
+        </p>
     </footer>
 
     <script>

@@ -86,93 +86,129 @@ $pageTitle = 'Register — BlogSite';
 require __DIR__ . '/header.php';
 ?>
 
-<h2>Register Account</h2>
-<p>Create a new account to publish blog posts and join discussions.</p>
-
-<?php if (!empty($errors)): ?>
-    <div>
-        <strong>Please fix the following errors:</strong>
-        <ul>
-            <?php foreach ($errors as $errorMsg): ?>
-                <li><?= e($errorMsg) ?></li>
-            <?php endforeach; ?>
-        </ul>
+<div class="auth-container">
+    <div class="auth-header">
+        <h2><span class="material-symbols-outlined header-icon">how_to_reg</span> Register Account</h2>
+        <p class="auth-subtitle">Create a new account to publish blog posts and join discussions.</p>
     </div>
-<?php endif; ?>
 
-<form method="POST" action="register.php">
-    <fieldset>
-        <legend>User Registration</legend>
+    <?php if (!empty($errors)): ?>
+        <div class="error-summary">
+            <div class="error-title">
+                <span class="material-symbols-outlined">error</span>
+                <strong>Please fix the following registration errors:</strong>
+            </div>
+            <ul>
+                <?php foreach ($errors as $errorMsg): ?>
+                    <li><?= e($errorMsg) ?></li>
+                <?php endforeach; ?>
+            </ul>
+        </div>
+    <?php endif; ?>
 
-        <p>
-            <label for="username">Username:</label><br>
-            <input 
-                type="text" 
-                id="username" 
-                name="username" 
-                required 
-                minlength="3" 
-                maxlength="50" 
-                value="<?= e($old['username']) ?>"
-                placeholder="e.g. jdoe"
-            >
-            <?php if (isset($errors['username'])): ?>
-                <br><small><strong>Error:</strong> <?= e($errors['username']) ?></small>
-            <?php endif; ?>
-        </p>
+    <form method="POST" action="register.php" class="auth-form">
+        <fieldset class="form-card">
+            <legend><span class="material-symbols-outlined legend-icon">person_add</span> User Registration</legend>
 
-        <p>
-            <label for="email">Email Address:</label><br>
-            <input 
-                type="email" 
-                id="email" 
-                name="email" 
-                required 
-                maxlength="255"
-                value="<?= e($old['email']) ?>"
-                placeholder="you@domain.com"
-            >
-            <?php if (isset($errors['email'])): ?>
-                <br><small><strong>Error:</strong> <?= e($errors['email']) ?></small>
-            <?php endif; ?>
-        </p>
+            <div class="form-group">
+                <label for="username">
+                    <span class="material-symbols-outlined label-icon">badge</span>
+                    <span>Username:</span>
+                </label>
+                <input 
+                    type="text" 
+                    id="username" 
+                    name="username" 
+                    required 
+                    minlength="3" 
+                    maxlength="50" 
+                    value="<?= e($old['username']) ?>"
+                    placeholder="e.g. jdoe"
+                >
+                <?php if (isset($errors['username'])): ?>
+                    <div class="field-error">
+                        <span class="material-symbols-outlined error-icon">error</span>
+                        <span><?= e($errors['username']) ?></span>
+                    </div>
+                <?php endif; ?>
+            </div>
 
-        <p>
-            <label for="password">Password (minimum 8 characters):</label><br>
-            <input 
-                type="password" 
-                id="password" 
-                name="password" 
-                required 
-                minlength="8"
-            >
-            <?php if (isset($errors['password'])): ?>
-                <br><small><strong>Error:</strong> <?= e($errors['password']) ?></small>
-            <?php endif; ?>
-        </p>
+            <div class="form-group">
+                <label for="email">
+                    <span class="material-symbols-outlined label-icon">mail</span>
+                    <span>Email Address:</span>
+                </label>
+                <input 
+                    type="email" 
+                    id="email" 
+                    name="email" 
+                    required 
+                    maxlength="255"
+                    value="<?= e($old['email']) ?>"
+                    placeholder="you@domain.com"
+                >
+                <?php if (isset($errors['email'])): ?>
+                    <div class="field-error">
+                        <span class="material-symbols-outlined error-icon">error</span>
+                        <span><?= e($errors['email']) ?></span>
+                    </div>
+                <?php endif; ?>
+            </div>
 
-        <p>
-            <label for="confirm_password">Confirm Password:</label><br>
-            <input 
-                type="password" 
-                id="confirm_password" 
-                name="confirm_password" 
-                required 
-                minlength="8"
-            >
-            <?php if (isset($errors['confirm_password'])): ?>
-                <br><small><strong>Error:</strong> <?= e($errors['confirm_password']) ?></small>
-            <?php endif; ?>
-        </p>
+            <div class="form-group">
+                <label for="password">
+                    <span class="material-symbols-outlined label-icon">key</span>
+                    <span>Password (minimum 8 characters):</span>
+                </label>
+                <input 
+                    type="password" 
+                    id="password" 
+                    name="password" 
+                    required 
+                    minlength="8"
+                    placeholder="At least 8 characters..."
+                >
+                <?php if (isset($errors['password'])): ?>
+                    <div class="field-error">
+                        <span class="material-symbols-outlined error-icon">error</span>
+                        <span><?= e($errors['password']) ?></span>
+                    </div>
+                <?php endif; ?>
+            </div>
 
-        <p>
-            <button type="submit">Register</button>
-        </p>
-    </fieldset>
-</form>
+            <div class="form-group">
+                <label for="confirm_password">
+                    <span class="material-symbols-outlined label-icon">lock_reset</span>
+                    <span>Confirm Password:</span>
+                </label>
+                <input 
+                    type="password" 
+                    id="confirm_password" 
+                    name="confirm_password" 
+                    required 
+                    minlength="8"
+                    placeholder="Re-type your password..."
+                >
+                <?php if (isset($errors['confirm_password'])): ?>
+                    <div class="field-error">
+                        <span class="material-symbols-outlined error-icon">error</span>
+                        <span><?= e($errors['confirm_password']) ?></span>
+                    </div>
+                <?php endif; ?>
+            </div>
 
-<p>
-    Already have an account? <a href="login.php">Log in here</a>.
-</p>
+            <div class="form-actions">
+                <button type="submit" class="btn btn-primary">
+                    <span class="material-symbols-outlined icon-inline">person_add</span>
+                    <span>Create Account</span>
+                </button>
+            </div>
+        </fieldset>
+    </form>
+
+    <div class="auth-switch">
+        <p>Already have an account? <a href="login.php" class="switch-link"><span class="material-symbols-outlined icon-inline">login</span> Log in here</a></p>
+    </div>
+</div>
 
 <?php require __DIR__ . '/footer.php'; ?>

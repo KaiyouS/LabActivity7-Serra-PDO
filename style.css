@@ -1,13 +1,14 @@
 /* ==========================================================================
    Lab Activity 7: Neobrutalist / Indie Web Design System
-   High-contrast borders, tactile offset drop-shadows, playful energetic accents
+   High-contrast borders, tactile offset drop-shadows, Material Symbols UI
    ========================================================================== */
 
-/* --- 1. Neobrutalist Tokens & Variables --- */
+/* --- 1. Neobrutalist Design Tokens --- */
 :root {
     --bg: #faf7f0;
     --surface: #ffffff;
     --surface-alt: #f1ede4;
+    --surface-card: #ffffff;
     
     --border: #000000;
     --border-w: 2.5px;
@@ -20,20 +21,25 @@
     --shadow-hover: 6px 6px 0px #000000;
     --shadow-active: 1px 1px 0px #000000;
     
-    /* Vibrant Indie Palette */
+    /* Vibrant Indie Color Accents */
     --accent-yellow: #fde047;
+    --accent-yellow-hover: #facc15;
     --accent-purple: #e9d5ff;
     --accent-blue: #bae6fd;
     --accent-mint: #bbf7d0;
+    --accent-mint-hover: #86efac;
     --accent-coral: #fed7aa;
     --accent-pink: #fbcfe8;
     
     --text-main: #0a0a0a;
     --text-muted: #4b5563;
     
-    --danger-bg: #fecaca;
+    --danger-bg: #fee2e2;
+    --danger-border: #ef4444;
     --danger-text: #991b1b;
-    --success-bg: #bbf7d0;
+    --danger-hover: #fca5a5;
+    
+    --success-bg: #dcfce7;
     --success-text: #166534;
     
     /* Typography */
@@ -44,7 +50,7 @@
     --radius-sm: 4px;
     --radius: 8px;
     --radius-lg: 12px;
-    --measure: 72ch;
+    --measure: 76ch;
 }
 
 /* --- 2. Base Document Resets --- */
@@ -74,7 +80,7 @@ body {
 }
 
 /* Central Content Container */
-header, main, footer {
+.site-header, .site-main, .site-footer, .flash-container {
     width: 100%;
     max-width: var(--measure);
     margin-left: auto;
@@ -83,172 +89,303 @@ header, main, footer {
     padding-right: clamp(1rem, 4vw, 2rem);
 }
 
-main {
+.site-main {
     flex: 1;
-    padding-top: 2rem;
+    padding-top: 1.75rem;
     padding-bottom: 4rem;
 }
 
-/* --- 3. Neobrutalist Header & Nav Bar --- */
-header {
-    padding-top: 1.75rem;
-    padding-bottom: 1.5rem;
+/* --- 3. Material Symbols Base --- */
+.material-symbols-outlined {
+    font-family: 'Material Symbols Outlined';
+    font-weight: normal;
+    font-style: normal;
+    font-size: 1.25rem;
+    line-height: 1;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    vertical-align: middle;
+    user-select: none;
+    flex-shrink: 0;
+}
+
+.icon-inline {
+    font-size: 1.15rem;
+    margin-right: 0.3rem;
+}
+
+.label-icon {
+    font-size: 1.1rem;
+    margin-right: 0.35rem;
+}
+
+.header-icon {
+    font-size: 1.6rem;
+    margin-right: 0.4rem;
+    vertical-align: -3px;
+}
+
+.section-icon {
+    font-size: 1.4rem;
+    margin-right: 0.35rem;
+    vertical-align: -2px;
+}
+
+.legend-icon {
+    font-size: 1.15rem;
+    margin-right: 0.35rem;
+    vertical-align: -2px;
+}
+
+.meta-icon {
+    font-size: 1rem;
+    margin-right: 0.25rem;
+}
+
+.badge-icon {
+    font-size: 0.95rem;
+    margin-right: 0.2rem;
+}
+
+/* --- 4. Neobrutalist Header & Navigation --- */
+.site-header {
+    padding-top: 1.5rem;
+    padding-bottom: 1.25rem;
     border-bottom: var(--border-w) solid var(--border);
     background-color: var(--bg);
 }
 
-header h1 {
-    font-family: var(--font-heading);
-    font-size: clamp(1.8rem, 4vw, 2.4rem);
-    font-weight: 700;
-    letter-spacing: -0.03em;
-    margin: 0 0 0.85rem 0;
+.header-inner {
     display: flex;
-    align-items: center;
-    gap: 0.65rem;
     flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
 }
 
-header h1::before {
-    content: "⚡";
+.brand-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.65rem;
+    text-decoration: none;
+    color: var(--text-main);
+    transition: transform 0.1s ease;
+}
+
+.brand-link:hover {
+    transform: translate(-1px, -1px);
+}
+
+.brand-icon {
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    width: 2.2rem;
-    height: 2.2rem;
-    background: var(--accent-yellow);
+    width: 2.35rem;
+    height: 2.35rem;
+    background-color: var(--accent-yellow);
     border: var(--border-w) solid var(--border);
     border-radius: var(--radius-sm);
     box-shadow: var(--shadow-sm);
-    font-size: 1.15rem;
 }
 
-header h1::after {
-    content: "PDO EDITION";
-    font-family: var(--font-mono);
-    font-size: 0.72rem;
+.brand-icon .material-symbols-outlined {
+    font-size: 1.4rem;
+    color: #000;
+}
+
+.brand-name {
+    font-family: var(--font-heading);
+    font-size: clamp(1.4rem, 3.5vw, 1.85rem);
     font-weight: 700;
-    letter-spacing: 0.1em;
+    letter-spacing: -0.03em;
+}
+
+.brand-badge {
+    font-family: var(--font-mono);
+    font-size: 0.7rem;
+    font-weight: 700;
+    letter-spacing: 0.08em;
     background: var(--accent-blue);
     border: var(--border-w-sm) solid var(--border);
     border-radius: var(--radius-sm);
     box-shadow: 2px 2px 0px #000;
-    padding: 0.2rem 0.5rem;
-    vertical-align: middle;
+    padding: 0.15rem 0.45rem;
 }
 
-nav {
+.site-nav {
     display: flex;
     flex-wrap: wrap;
     align-items: center;
-    gap: 0.5rem 0.85rem;
+    gap: 0.5rem 0.65rem;
     font-family: var(--font-mono);
-    font-size: 0.88rem;
+}
+
+.user-pill {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.35rem;
+    background: var(--surface);
+    border: var(--border-w-sm) solid var(--border);
+    border-radius: var(--radius-sm);
+    box-shadow: 2px 2px 0px #000;
+    padding: 0.3rem 0.65rem;
+    font-size: 0.84rem;
     font-weight: 600;
 }
 
-nav span:first-child {
-    background: var(--surface);
-    border: var(--border-w-sm) solid var(--border);
-    padding: 0.3rem 0.65rem;
-    border-radius: var(--radius-sm);
-    box-shadow: 2px 2px 0px #000;
+.user-pill .icon-inline {
+    font-size: 1.15rem;
+    color: var(--text-main);
 }
 
-nav a {
+.user-name {
+    font-weight: 700;
+    color: var(--text-main);
+}
+
+.user-email {
+    color: var(--text-muted);
+    font-size: 0.78rem;
+}
+
+.nav-btn {
+    display: inline-flex;
+    align-items: center;
     background: var(--surface);
     color: var(--text-main);
     border: var(--border-w-sm) solid var(--border);
-    padding: 0.3rem 0.75rem;
     border-radius: var(--radius-sm);
     box-shadow: 2px 2px 0px #000;
-    text-decoration: none;
+    padding: 0.35rem 0.75rem;
+    font-size: 0.85rem;
     font-weight: 700;
-    transition: transform 0.1s ease, box-shadow 0.1s ease, background-color 0.1s ease;
+    text-decoration: none;
+    transition: transform 0.08s ease, box-shadow 0.08s ease, background-color 0.1s ease;
 }
 
-nav a:hover {
+.nav-btn:hover {
     background: var(--accent-yellow);
     transform: translate(-1px, -1px);
     box-shadow: 3px 3px 0px #000;
 }
 
-nav a:active {
+.nav-btn:active {
     transform: translate(1px, 1px);
     box-shadow: 1px 1px 0px #000;
 }
 
-nav a[href="logout.php"] {
+.nav-btn-accent {
+    background: var(--accent-yellow);
+}
+
+.nav-btn-danger {
     background: var(--danger-bg);
     color: var(--danger-text);
 }
 
-nav a[href="logout.php"]:hover {
-    background: #f87171;
+.nav-btn-danger:hover {
+    background: var(--danger-hover);
     color: #000;
 }
 
-/* --- 4. Chunky Typography --- */
+/* --- 5. Flash & Notice Notifications --- */
+.flash-container {
+    margin-top: 1.5rem;
+}
+
+.flash-notice {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    border: var(--border-w) solid var(--border);
+    border-radius: var(--radius);
+    box-shadow: var(--shadow);
+    padding: 0.85rem 1.25rem;
+    font-family: var(--font-mono);
+    font-size: 0.9rem;
+}
+
+.flash-icon {
+    font-size: 1.5rem;
+    flex-shrink: 0;
+}
+
+.flash-text {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0.4rem;
+}
+
+.flash-success {
+    background-color: var(--accent-mint);
+    color: #064e3b;
+}
+
+.flash-error {
+    background-color: var(--danger-bg);
+    color: var(--danger-text);
+}
+
+.flash-info {
+    background-color: var(--accent-blue);
+    color: #0c4a6e;
+}
+
+/* --- 6. Typography & Headings --- */
 h2, h3, h4, h5 {
     font-family: var(--font-heading);
     color: var(--text-main);
     font-weight: 700;
     letter-spacing: -0.02em;
     line-height: 1.25;
-    margin-top: 1.75rem;
-    margin-bottom: 0.65rem;
+    margin: 0;
 }
 
 h2 {
-    font-size: clamp(1.5rem, 3vw, 2rem);
+    font-size: clamp(1.6rem, 3.5vw, 2.1rem);
+    display: flex;
+    align-items: center;
 }
 
 h3 {
-    font-size: clamp(1.25rem, 2.5vw, 1.6rem);
+    font-size: clamp(1.3rem, 2.8vw, 1.65rem);
+    display: flex;
+    align-items: center;
 }
 
 h4 {
-    font-size: 1.35rem;
-    margin-top: 0;
-    margin-bottom: 0.4rem;
+    font-size: 1.25rem;
+    line-height: 1.35;
 }
 
 h5 {
-    font-size: 1rem;
-    text-transform: uppercase;
-    letter-spacing: 0.05em;
-    font-family: var(--font-mono);
+    font-size: 1.05rem;
+    display: flex;
+    align-items: center;
 }
 
 p {
     margin: 0 0 1rem 0;
 }
 
-/* Semantic Rule */
+/* Semantic Rule Divider */
 hr {
     border: 0;
     height: 3px;
     background-color: var(--border);
-    margin: 2.25rem 0;
+    margin: 2rem 0;
 }
 
-article + hr,
-main + hr {
-    display: none;
-}
-
-/* --- 5. Fieldset, Legends & Forms --- */
-form {
-    margin: 1.5rem 0;
-}
-
-fieldset {
+/* --- 7. Forms, Fieldsets & Inputs --- */
+.form-card {
     background-color: var(--surface);
     border: var(--border-w) solid var(--border);
     border-radius: var(--radius-lg);
     box-shadow: var(--shadow);
-    padding: 1.5rem 1.5rem 1.25rem 1.5rem;
-    margin: 0 0 1.75rem 0;
+    padding: 1.5rem clamp(1.2rem, 3vw, 1.75rem);
+    margin: 1.5rem 0 2rem 0;
 }
 
 legend {
@@ -263,15 +400,22 @@ legend {
     border-radius: var(--radius-sm);
     box-shadow: 2px 2px 0px #000;
     padding: 0.35rem 0.85rem;
+    display: inline-flex;
+    align-items: center;
 }
 
-label {
-    display: block;
+.form-group {
+    margin-bottom: 1.25rem;
+}
+
+.form-group label {
+    display: flex;
+    align-items: center;
     font-family: var(--font-heading);
-    font-size: 0.92rem;
+    font-size: 0.95rem;
     font-weight: 700;
     color: var(--text-main);
-    margin-bottom: 0.35rem;
+    margin-bottom: 0.4rem;
 }
 
 input[type="text"],
@@ -282,14 +426,14 @@ textarea {
     max-width: 100%;
     font-family: var(--font-body);
     font-size: 0.98rem;
-    padding: 0.65rem 0.85rem;
+    padding: 0.7rem 0.9rem;
     background-color: #ffffff;
     color: var(--text-main);
     border: var(--border-w) solid var(--border);
     border-radius: var(--radius);
     box-shadow: var(--shadow-sm);
     outline: none;
-    transition: transform 0.1s ease, box-shadow 0.1s ease, background-color 0.1s ease;
+    transition: transform 0.08s ease, box-shadow 0.08s ease, background-color 0.1s ease;
 }
 
 input[type="text"]:focus,
@@ -302,13 +446,21 @@ textarea:focus {
 }
 
 textarea {
-    min-height: 90px;
+    min-height: 95px;
     resize: vertical;
+    line-height: 1.5;
 }
 
-/* Playful Tactile Buttons */
-button,
-input[type="submit"] {
+.form-actions {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0.75rem;
+    margin-top: 1.25rem;
+}
+
+/* --- 8. Tactile Neobrutalist Buttons --- */
+.btn {
     display: inline-flex;
     align-items: center;
     justify-content: center;
@@ -316,6 +468,77 @@ input[type="submit"] {
     font-size: 0.95rem;
     font-weight: 700;
     letter-spacing: -0.01em;
+    padding: 0.65rem 1.35rem;
+    border: var(--border-w) solid var(--border);
+    border-radius: var(--radius);
+    box-shadow: var(--shadow);
+    cursor: pointer;
+    text-decoration: none;
+    transition: transform 0.08s ease, box-shadow 0.08s ease, background-color 0.1s ease;
+}
+
+.btn-primary {
+    background-color: var(--accent-yellow);
+    color: #000000;
+}
+
+.btn-primary:hover {
+    background-color: var(--accent-yellow-hover);
+    transform: translate(-2px, -2px);
+    box-shadow: var(--shadow-hover);
+}
+
+.btn-primary:active {
+    transform: translate(2px, 2px);
+    box-shadow: var(--shadow-active);
+}
+
+.btn-secondary {
+    background-color: var(--accent-mint);
+    color: #000000;
+}
+
+.btn-secondary:hover {
+    background-color: var(--accent-mint-hover);
+    transform: translate(-2px, -2px);
+    box-shadow: var(--shadow-hover);
+}
+
+.btn-secondary:active {
+    transform: translate(2px, 2px);
+    box-shadow: var(--shadow-active);
+}
+
+.btn-cancel {
+    background-color: var(--surface-alt);
+    color: var(--text-main);
+}
+
+.btn-cancel:hover {
+    background-color: #e5e0d5;
+    transform: translate(-2px, -2px);
+    box-shadow: var(--shadow-hover);
+}
+
+.btn-cancel:active {
+    transform: translate(2px, 2px);
+    box-shadow: var(--shadow-active);
+}
+
+.btn-sm {
+    padding: 0.45rem 1rem;
+    font-size: 0.88rem;
+}
+
+/* Fallback for raw button tags */
+button:not(.btn-action):not(.btn-action-sm):not(.nav-btn),
+input[type="submit"] {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-family: var(--font-heading);
+    font-size: 0.95rem;
+    font-weight: 700;
     padding: 0.65rem 1.35rem;
     background-color: var(--accent-yellow);
     color: #000000;
@@ -328,7 +551,7 @@ input[type="submit"] {
 
 button:hover,
 input[type="submit"]:hover {
-    background-color: #facc15;
+    background-color: var(--accent-yellow-hover);
     transform: translate(-2px, -2px);
     box-shadow: var(--shadow-hover);
 }
@@ -339,158 +562,250 @@ input[type="submit"]:active {
     box-shadow: var(--shadow-active);
 }
 
-/* Secondary Actions / Cancel Links */
-a:not(nav a) {
-    color: var(--text-main);
-    font-weight: 700;
-    text-decoration: underline;
-    text-decoration-thickness: 2px;
-    text-underline-offset: 3px;
-    transition: background-color 0.1s ease;
+/* Mini Action Buttons (Edit / Delete) */
+.post-actions,
+.comment-actions {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
 }
 
-a:not(nav a):hover {
-    background-color: var(--accent-yellow);
-}
-
-/* Edit action links styled as tactile mini buttons */
-article a[href*="edit_post"],
-li a[href*="edit_comment"] {
+.post-actions form,
+.comment-actions form {
     display: inline-block;
-    background-color: var(--accent-yellow);
-    color: #000;
-    border: var(--border-w-sm) solid var(--border);
-    box-shadow: 2px 2px 0px #000;
-    padding: 0.25rem 0.6rem;
-    font-size: 0.8rem;
-    border-radius: var(--radius-sm);
+    margin: 0;
+}
+
+.btn-action,
+.btn-action-sm {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
     font-family: var(--font-mono);
     font-weight: 700;
+    border: var(--border-w-sm) solid var(--border);
+    border-radius: var(--radius-sm);
+    box-shadow: 2px 2px 0px #000;
     text-decoration: none;
+    cursor: pointer;
     transition: transform 0.08s ease, box-shadow 0.08s ease, background-color 0.1s ease;
 }
 
-article a[href*="edit_post"]:hover,
-li a[href*="edit_comment"]:hover {
-    background-color: #facc15;
+.btn-action {
+    padding: 0.3rem 0.65rem;
+    font-size: 0.82rem;
+}
+
+.btn-action-sm {
+    padding: 0.2rem 0.5rem;
+    font-size: 0.75rem;
+}
+
+.btn-edit {
+    background-color: var(--accent-yellow);
+    color: #000;
+}
+
+.btn-edit:hover {
+    background-color: var(--accent-yellow-hover);
     transform: translate(-1px, -1px);
     box-shadow: 3px 3px 0px #000;
 }
 
-article a[href*="edit_post"]:active,
-li a[href*="edit_comment"]:active {
+.btn-edit:active {
     transform: translate(1px, 1px);
     box-shadow: 1px 1px 0px #000;
 }
 
-/* Back links */
-a[href*="index.php"]:not(nav a) {
+.btn-delete {
+    background-color: var(--danger-bg);
+    color: var(--danger-text);
+}
+
+.btn-delete:hover {
+    background-color: var(--danger-hover);
+    color: #000;
+    transform: translate(-1px, -1px);
+    box-shadow: 3px 3px 0px #000;
+}
+
+.btn-delete:active {
+    transform: translate(1px, 1px);
+    box-shadow: 1px 1px 0px #000;
+}
+
+/* Back Button Pill */
+.page-nav-bar {
+    margin-bottom: 1.25rem;
+}
+
+.btn-back {
     display: inline-flex;
     align-items: center;
-    gap: 0.35rem;
     background: var(--surface);
+    color: var(--text-main);
     border: var(--border-w-sm) solid var(--border);
-    padding: 0.35rem 0.75rem;
     border-radius: var(--radius-sm);
     box-shadow: 2px 2px 0px #000;
-    text-decoration: none;
+    padding: 0.4rem 0.85rem;
     font-family: var(--font-mono);
     font-size: 0.85rem;
     font-weight: 700;
-    margin-bottom: 1rem;
+    text-decoration: none;
     transition: transform 0.08s ease, box-shadow 0.08s ease, background-color 0.1s ease;
 }
 
-a[href*="index.php"]:not(nav a):hover {
+.btn-back:hover {
     background: var(--accent-yellow);
     transform: translate(-1px, -1px);
     box-shadow: 3px 3px 0px #000;
 }
 
-a[href*="index.php"]:not(nav a):active {
+.btn-back:active {
     transform: translate(1px, 1px);
     box-shadow: 1px 1px 0px #000;
 }
 
-/* Inline Form Actions (e.g. Delete Button) */
-article form,
-li form {
-    display: inline-block;
-    margin: 0;
+/* --- 9. News Feed & Post Cards --- */
+.feed-header {
+    margin-bottom: 1.75rem;
 }
 
-article form button,
-li form button {
-    background-color: var(--danger-bg);
-    color: var(--danger-text);
-    border: var(--border-w-sm) solid var(--border);
-    box-shadow: 2px 2px 0px #000;
-    padding: 0.25rem 0.6rem;
-    font-size: 0.8rem;
-    border-radius: var(--radius-sm);
-    margin-left: 0.5rem;
+.feed-subtitle {
+    color: var(--text-muted);
+    font-size: 0.98rem;
+    margin-top: 0.35rem;
+}
+
+.section-title-bar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin: 2rem 0 1.25rem 0;
+    padding-bottom: 0.5rem;
+    border-bottom: var(--border-w) solid var(--border);
+}
+
+.badge {
     font-family: var(--font-mono);
-    text-decoration: none;
+    font-size: 0.8rem;
+    font-weight: 700;
+    border: var(--border-w-sm) solid var(--border);
+    border-radius: var(--radius-sm);
+    box-shadow: 2px 2px 0px #000;
+    padding: 0.2rem 0.6rem;
 }
 
-article form button:hover,
-li form button:hover {
-    background-color: #f87171;
+.badge-accent {
+    background-color: var(--accent-yellow);
     color: #000;
-    box-shadow: 3px 3px 0px #000;
-    transform: translate(-1px, -1px);
 }
 
-article form button:active,
-li form button:active {
-    transform: translate(1px, 1px);
-    box-shadow: 1px 1px 0px #000;
+.badge-count {
+    background-color: var(--accent-blue);
+    color: #000;
+    margin-left: 0.5rem;
 }
 
-/* --- 6. Articles & Post Cards --- */
-article {
+/* Empty State Card */
+.empty-state-card {
     background-color: var(--surface);
     border: var(--border-w) solid var(--border);
     border-radius: var(--radius-lg);
     box-shadow: var(--shadow);
+    padding: 3rem 2rem;
+    text-align: center;
+    margin: 2rem 0;
+}
+
+.empty-icon {
+    font-size: 3rem;
+    color: var(--accent-yellow);
+    background: #000;
+    padding: 0.75rem;
+    border-radius: var(--radius);
+    box-shadow: var(--shadow-sm);
+    margin-bottom: 1rem;
+}
+
+.empty-state-card h4 {
+    font-size: 1.35rem;
+    margin-bottom: 0.5rem;
+}
+
+.empty-state-card p {
+    color: var(--text-muted);
+    margin: 0;
+}
+
+/* Post Card Component */
+.post-card {
+    background-color: var(--surface-card);
+    border: var(--border-w) solid var(--border);
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow);
     padding: 1.5rem clamp(1.2rem, 3vw, 1.75rem);
-    margin-bottom: 2.25rem;
+    margin-bottom: 2rem;
     transition: transform 0.15s ease, box-shadow 0.15s ease;
 }
 
-article:hover {
+.post-card:hover {
     transform: translate(-2px, -2px);
     box-shadow: var(--shadow-hover);
 }
 
-article h4 {
-    background: var(--surface);
-    display: inline-block;
+.post-header {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 0.75rem;
+    margin-bottom: 0.65rem;
 }
 
-/* Byline Metadata */
-article > p:first-of-type small {
-    display: inline-flex;
+.post-title {
+    font-family: var(--font-heading);
+    font-size: clamp(1.25rem, 2.5vw, 1.5rem);
+    font-weight: 700;
+    color: var(--text-main);
+    flex: 1;
+    min-width: 250px;
+}
+
+.post-meta {
+    display: flex;
     flex-wrap: wrap;
     align-items: center;
-    gap: 0.45rem;
+    gap: 0.45rem 0.75rem;
     font-family: var(--font-mono);
     font-size: 0.82rem;
     color: var(--text-muted);
     background: var(--surface-alt);
     border: var(--border-w-sm) solid var(--border);
     border-radius: var(--radius-sm);
-    padding: 0.25rem 0.55rem;
+    padding: 0.35rem 0.65rem;
     box-shadow: 2px 2px 0px #000;
-    margin-bottom: 0.75rem;
+    margin-bottom: 1.15rem;
 }
 
-article > p:first-of-type small strong {
+.meta-item {
+    display: inline-flex;
+    align-items: center;
+}
+
+.owner-pill {
+    background: var(--accent-yellow);
     color: #000;
+    border: var(--border-w-sm) solid var(--border);
+    border-radius: var(--radius-sm);
+    font-size: 0.7rem;
+    font-weight: 700;
+    padding: 0.05rem 0.35rem;
+    margin-left: 0.35rem;
+    box-shadow: 1px 1px 0px #000;
 }
 
-/* (edited) Sticker / Badge */
-time[data-edited-marker="true"] {
+.badge-edited {
     display: inline-flex;
     align-items: center;
     font-family: var(--font-mono);
@@ -503,126 +818,195 @@ time[data-edited-marker="true"] {
     border: var(--border-w-sm) solid var(--border);
     border-radius: var(--radius-sm);
     box-shadow: 1.5px 1.5px 0px #000;
-    padding: 0.1rem 0.4rem;
+    padding: 0.1rem 0.45rem;
     cursor: help;
 }
 
-time[data-edited-marker="true"] strong {
-    font-weight: 700;
+.badge-edited-text {
+    background-color: var(--accent-coral);
+    padding: 0.15rem 0.4rem;
+    border-radius: var(--radius-sm);
+    border: var(--border-w-sm) solid var(--border);
 }
 
-/* --- 7. Comments Section --- */
-article section {
-    margin-top: 1.75rem;
+.post-body {
+    font-size: 1rem;
+    line-height: 1.65;
+    color: var(--text-main);
+    margin-bottom: 1.5rem;
+    word-break: break-word;
+}
+
+.post-body p {
+    margin: 0;
+}
+
+/* --- 10. Comments Stream --- */
+.comments-section {
+    margin-top: 1.5rem;
     padding-top: 1.25rem;
-    border-top: 2px dashed var(--border);
+    border-top: 2.5px dashed var(--border);
 }
 
-article section h5 {
-    display: flex;
-    align-items: center;
-    gap: 0.5rem;
+.comments-header {
+    margin-bottom: 1rem;
 }
 
-article section h5::before {
-    content: "💬";
-}
-
-article section ul {
+.comments-list {
     list-style: none;
     padding: 0;
-    margin: 1rem 0;
+    margin: 0 0 1.25rem 0;
 }
 
-article section li {
+.comment-item {
     background-color: #ffffff;
     border: var(--border-w) solid var(--border);
     border-radius: var(--radius);
     box-shadow: var(--shadow-sm);
-    padding: 0.85rem 1rem;
-    margin-bottom: 1rem;
-    font-size: 0.92rem;
-    transition: transform 0.1s ease;
+    padding: 0.85rem 1.15rem;
+    margin-bottom: 0.85rem;
+    transition: transform 0.08s ease;
 }
 
-article section li:hover {
+.comment-item:hover {
     transform: translate(-1px, -1px);
 }
 
-article section li strong {
+.comment-header {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.5rem;
+    margin-bottom: 0.5rem;
+}
+
+.comment-author-info {
+    display: inline-flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0.35rem 0.5rem;
+    font-size: 0.88rem;
+}
+
+.comment-author-info strong {
     font-family: var(--font-heading);
-    font-size: 0.95rem;
     color: #000;
 }
 
-article section li small {
+.comment-time {
+    display: inline-flex;
+    align-items: center;
     font-family: var(--font-mono);
     font-size: 0.78rem;
     color: var(--text-muted);
 }
 
-article section li p {
-    margin: 0.45rem 0 0.4rem 0;
-    line-height: 1.5;
-}
-
-article section fieldset {
-    background-color: var(--surface-alt);
-    padding: 1.15rem;
-    margin-top: 1.25rem;
-    box-shadow: var(--shadow-sm);
-}
-
-article section legend {
-    background-color: var(--accent-mint);
-    font-size: 0.82rem;
-}
-
-article section textarea {
-    min-height: 65px;
+.comment-body {
     font-size: 0.92rem;
+    line-height: 1.5;
+    word-break: break-word;
 }
 
-article section button {
-    background-color: var(--accent-mint);
-    padding: 0.5rem 1.15rem;
-    font-size: 0.88rem;
-}
-
-/* --- 8. Flash & Notice Banners --- */
-.flash-notice,
-header + div {
-    background-color: var(--accent-blue);
-    border: var(--border-w) solid var(--border);
-    border-radius: var(--radius);
-    box-shadow: var(--shadow);
-    padding: 0.85rem 1.25rem;
-    margin: 1.5rem auto 0 auto;
-    max-width: var(--measure);
-    font-family: var(--font-mono);
-    font-weight: 700;
-    font-size: 0.9rem;
-}
-
-.flash-notice p,
-header + div p {
+.comment-body p {
     margin: 0;
 }
 
-.flash-success {
+.empty-comments {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    background: var(--surface-alt);
+    border: var(--border-w-sm) dashed var(--border);
+    border-radius: var(--radius-sm);
+    padding: 0.65rem 1rem;
+    margin-bottom: 1.25rem;
+    color: var(--text-muted);
+}
+
+.empty-comments p {
+    margin: 0;
+}
+
+.empty-comments-icon {
+    font-size: 1.2rem;
+    color: var(--text-muted);
+}
+
+/* Nested Comment Form */
+.comment-fieldset {
+    background-color: var(--surface-alt);
+    border: var(--border-w) solid var(--border);
+    border-radius: var(--radius);
+    box-shadow: var(--shadow-sm);
+    padding: 1rem 1.15rem;
+    margin: 0;
+}
+
+.comment-fieldset legend {
     background-color: var(--accent-mint);
-    color: #064e3b;
+    font-size: 0.82rem;
+    padding: 0.25rem 0.65rem;
 }
 
-.flash-error {
-    background-color: var(--danger-bg);
-    color: var(--danger-text);
+.comment-fieldset textarea {
+    min-height: 60px;
+    font-size: 0.92rem;
+    padding: 0.55rem 0.75rem;
 }
 
-/* Validation Errors Container */
-.error-summary,
-form > div:first-child:has(ul),
-main > div:has(ul) {
+/* --- 11. Auth Pages (Login & Register) --- */
+.auth-container {
+    max-width: 480px;
+    margin: 0 auto;
+}
+
+.auth-header {
+    margin-bottom: 1.5rem;
+}
+
+.auth-subtitle {
+    color: var(--text-muted);
+    font-size: 0.95rem;
+    margin-top: 0.35rem;
+}
+
+.auth-form .form-card {
+    margin-top: 0;
+}
+
+.auth-switch {
+    background: var(--surface);
+    border: var(--border-w) solid var(--border);
+    border-radius: var(--radius);
+    box-shadow: var(--shadow-sm);
+    padding: 0.85rem 1.25rem;
+    text-align: center;
+    font-family: var(--font-mono);
+    font-size: 0.88rem;
+    margin-top: 1.5rem;
+}
+
+.auth-switch p {
+    margin: 0;
+}
+
+.switch-link {
+    display: inline-flex;
+    align-items: center;
+    color: var(--text-main);
+    font-weight: 700;
+    text-decoration: underline;
+    text-underline-offset: 3px;
+    margin-left: 0.35rem;
+}
+
+.switch-link:hover {
+    background-color: var(--accent-yellow);
+}
+
+/* --- 12. Error Summaries & Validation States --- */
+.error-summary {
     background-color: var(--danger-bg);
     border: var(--border-w) solid var(--border);
     border-radius: var(--radius);
@@ -632,35 +1016,58 @@ main > div:has(ul) {
     color: var(--danger-text);
 }
 
-form > div:first-child:has(ul) strong,
-main > div:has(ul) strong {
+.error-title {
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
     font-family: var(--font-heading);
     font-size: 1rem;
-    color: #000;
+    color: var(--danger-text);
 }
 
-form > div:first-child:has(ul) ul,
-main > div:has(ul) ul {
-    margin: 0.5rem 0 0 1.2rem;
+.error-summary ul {
+    margin: 0.5rem 0 0 1.25rem;
     padding: 0;
     font-family: var(--font-mono);
     font-size: 0.88rem;
 }
 
-small:has(strong) {
+.field-error {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.3rem;
     background: var(--danger-bg);
     border: var(--border-w-sm) solid var(--border);
     color: var(--danger-text);
-    padding: 0.15rem 0.45rem;
+    padding: 0.2rem 0.55rem;
     border-radius: var(--radius-sm);
-    display: inline-block;
-    margin-top: 0.25rem;
+    margin-top: 0.4rem;
     font-family: var(--font-mono);
-    font-size: 0.78rem;
+    font-size: 0.8rem;
+    font-weight: 600;
+    box-shadow: 1.5px 1.5px 0px #000;
 }
 
-/* --- 9. Footer --- */
-footer {
+.error-icon {
+    font-size: 1rem;
+}
+
+/* Generic Link Fallback */
+a:not(.brand-link):not(.nav-btn):not(.btn):not(.btn-action):not(.btn-action-sm):not(.btn-back):not(.switch-link) {
+    color: var(--text-main);
+    font-weight: 700;
+    text-decoration: underline;
+    text-decoration-thickness: 2px;
+    text-underline-offset: 3px;
+    transition: background-color 0.1s ease;
+}
+
+a:not(.brand-link):not(.nav-btn):not(.btn):not(.btn-action):not(.btn-action-sm):not(.btn-back):not(.switch-link):hover {
+    background-color: var(--accent-yellow);
+}
+
+/* --- 13. Site Footer --- */
+.site-footer {
     padding-top: 2rem;
     padding-bottom: 3rem;
     text-align: center;
@@ -671,19 +1078,60 @@ footer {
     color: var(--text-muted);
 }
 
-footer p {
+.site-footer p {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.45rem;
     margin: 0;
 }
 
-/* Responsive */
-@media (max-width: 600px) {
+.footer-icon {
+    font-size: 1.2rem;
+    color: var(--text-main);
+}
+
+/* --- 14. Responsive Breakpoints --- */
+@media (max-width: 640px) {
     :root {
         --shadow-distance: 3px;
+        --shadow: 3px 3px 0px #000;
     }
-    header h1 {
-        font-size: 1.6rem;
+    
+    .header-inner {
+        flex-direction: column;
+        align-items: flex-start;
     }
-    fieldset, article {
+
+    .site-nav {
+        width: 100%;
+    }
+
+    .user-pill {
+        width: 100%;
+        justify-content: flex-start;
+    }
+
+    .post-header {
+        flex-direction: column;
+    }
+
+    .post-actions {
+        width: 100%;
+        justify-content: flex-start;
+    }
+
+    .comment-header {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .comment-actions {
+        width: 100%;
+        justify-content: flex-start;
+    }
+
+    .form-card {
         padding: 1.25rem 1rem;
     }
 }

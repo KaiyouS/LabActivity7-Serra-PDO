@@ -75,16 +75,24 @@ $pageTitle = 'Edit Blog Post — BlogSite';
 require __DIR__ . '/header.php';
 ?>
 
-<p>
-    <a href="index.php#post-<?= (int)$postId ?>">&larr; Back to News Feed</a>
-</p>
+<div class="page-nav-bar">
+    <a href="index.php#post-<?= (int)$postId ?>" class="btn-back">
+        <span class="material-symbols-outlined icon-inline">arrow_back</span>
+        <span>Back to News Feed</span>
+    </a>
+</div>
 
-<h2>Edit Blog Post</h2>
-<p>Make changes to your blog post. An <strong>(edited)</strong> marker will be displayed once saved.</p>
+<div class="edit-page-header">
+    <h2><span class="material-symbols-outlined header-icon">edit_document</span> Edit Blog Post</h2>
+    <p class="edit-subtitle">Make changes to your blog post. An <strong class="badge-edited-text">(edited)</strong> marker will be displayed once saved.</p>
+</div>
 
 <?php if (!empty($errors)): ?>
-    <div>
-        <strong>Please fix the following errors:</strong>
+    <div class="error-summary">
+        <div class="error-title">
+            <span class="material-symbols-outlined">error</span>
+            <strong>Please fix the following errors:</strong>
+        </div>
         <ul>
             <?php foreach ($errors as $errorMsg): ?>
                 <li><?= e($errorMsg) ?></li>
@@ -93,44 +101,62 @@ require __DIR__ . '/header.php';
     </div>
 <?php endif; ?>
 
-<form method="POST" action="edit_post.php?id=<?= (int)$postId ?>">
-    <fieldset>
-        <legend>Edit Post #<?= (int)$postId ?></legend>
+<form method="POST" action="edit_post.php?id=<?= (int)$postId ?>" class="edit-form">
+    <fieldset class="form-card">
+        <legend><span class="material-symbols-outlined legend-icon">edit</span> Edit Post #<?= (int)$postId ?></legend>
 
-        <p>
-            <label for="title">Post Title:</label><br>
+        <div class="form-group">
+            <label for="title">
+                <span class="material-symbols-outlined label-icon">title</span>
+                <span>Post Title:</span>
+            </label>
             <input 
                 type="text" 
                 id="title" 
                 name="title" 
                 required 
                 maxlength="255"
-                size="60"
                 value="<?= e($title) ?>" 
+                placeholder="Enter post title..."
             >
             <?php if (isset($errors['title'])): ?>
-                <br><small><strong>Error:</strong> <?= e($errors['title']) ?></small>
+                <div class="field-error">
+                    <span class="material-symbols-outlined error-icon">error</span>
+                    <span><?= e($errors['title']) ?></span>
+                </div>
             <?php endif; ?>
-        </p>
+        </div>
 
-        <p>
-            <label for="content">Post Content (Text-Only):</label><br>
+        <div class="form-group">
+            <label for="content">
+                <span class="material-symbols-outlined label-icon">notes</span>
+                <span>Post Content (Text-Only):</span>
+            </label>
             <textarea 
                 id="content" 
                 name="content" 
-                rows="8" 
-                cols="60" 
+                rows="7" 
                 required 
+                placeholder="Write your post content..."
             ><?= e($content) ?></textarea>
             <?php if (isset($errors['content'])): ?>
-                <br><small><strong>Error:</strong> <?= e($errors['content']) ?></small>
+                <div class="field-error">
+                    <span class="material-symbols-outlined error-icon">error</span>
+                    <span><?= e($errors['content']) ?></span>
+                </div>
             <?php endif; ?>
-        </p>
+        </div>
 
-        <p>
-            <button type="submit">Save Changes</button>
-            <a href="index.php#post-<?= (int)$postId ?>">Cancel</a>
-        </p>
+        <div class="form-actions">
+            <button type="submit" class="btn btn-primary">
+                <span class="material-symbols-outlined icon-inline">save</span>
+                <span>Save Changes</span>
+            </button>
+            <a href="index.php#post-<?= (int)$postId ?>" class="btn btn-cancel">
+                <span class="material-symbols-outlined icon-inline">close</span>
+                <span>Cancel</span>
+            </a>
+        </div>
     </fieldset>
 </form>
 

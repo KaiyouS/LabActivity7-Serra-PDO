@@ -52,55 +52,79 @@ $pageTitle = 'Login — BlogSite';
 require __DIR__ . '/header.php';
 ?>
 
-<h2>Sign In</h2>
-<p>Enter your credentials to access your news feed.</p>
-
-<?php if (isset($errors['auth'])): ?>
-    <div class="flash-notice flash-error">
-        <p><strong>[ERROR]:</strong> <?= e($errors['auth']) ?></p>
+<div class="auth-container">
+    <div class="auth-header">
+        <h2><span class="material-symbols-outlined header-icon">login</span> Sign In</h2>
+        <p class="auth-subtitle">Enter your credentials to access your community news feed.</p>
     </div>
-<?php endif; ?>
 
-<form method="POST" action="login.php">
-    <fieldset>
-        <legend>User Authentication</legend>
+    <?php if (isset($errors['auth'])): ?>
+        <div class="flash-notice flash-error">
+            <span class="material-symbols-outlined flash-icon">error</span>
+            <div class="flash-text">
+                <strong>[ERROR]</strong>
+                <span><?= e($errors['auth']) ?></span>
+            </div>
+        </div>
+    <?php endif; ?>
 
-        <p>
-            <label for="email">Email Address:</label><br>
-            <input 
-                type="email" 
-                id="email" 
-                name="email" 
-                required 
-                value="<?= e($oldEmail) ?>"
-                placeholder="you@domain.com"
-            >
-            <?php if (isset($errors['email'])): ?>
-                <br><small><strong>Error:</strong> <?= e($errors['email']) ?></small>
-            <?php endif; ?>
-        </p>
+    <form method="POST" action="login.php" class="auth-form">
+        <fieldset class="form-card">
+            <legend><span class="material-symbols-outlined legend-icon">lock</span> User Authentication</legend>
 
-        <p>
-            <label for="password">Password:</label><br>
-            <input 
-                type="password" 
-                id="password" 
-                name="password" 
-                required
-            >
-            <?php if (isset($errors['password'])): ?>
-                <br><small><strong>Error:</strong> <?= e($errors['password']) ?></small>
-            <?php endif; ?>
-        </p>
+            <div class="form-group">
+                <label for="email">
+                    <span class="material-symbols-outlined label-icon">mail</span>
+                    <span>Email Address:</span>
+                </label>
+                <input 
+                    type="email" 
+                    id="email" 
+                    name="email" 
+                    required 
+                    value="<?= e($oldEmail) ?>"
+                    placeholder="you@domain.com"
+                >
+                <?php if (isset($errors['email'])): ?>
+                    <div class="field-error">
+                        <span class="material-symbols-outlined error-icon">error</span>
+                        <span><?= e($errors['email']) ?></span>
+                    </div>
+                <?php endif; ?>
+            </div>
 
-        <p>
-            <button type="submit">Sign In</button>
-        </p>
-    </fieldset>
-</form>
+            <div class="form-group">
+                <label for="password">
+                    <span class="material-symbols-outlined label-icon">key</span>
+                    <span>Password:</span>
+                </label>
+                <input 
+                    type="password" 
+                    id="password" 
+                    name="password" 
+                    required
+                    placeholder="Enter your password..."
+                >
+                <?php if (isset($errors['password'])): ?>
+                    <div class="field-error">
+                        <span class="material-symbols-outlined error-icon">error</span>
+                        <span><?= e($errors['password']) ?></span>
+                    </div>
+                <?php endif; ?>
+            </div>
 
-<p>
-    Don't have an account yet? <a href="register.php">Register here</a>.
-</p>
+            <div class="form-actions">
+                <button type="submit" class="btn btn-primary">
+                    <span class="material-symbols-outlined icon-inline">arrow_forward</span>
+                    <span>Sign In</span>
+                </button>
+            </div>
+        </fieldset>
+    </form>
+
+    <div class="auth-switch">
+        <p>Don't have an account yet? <a href="register.php" class="switch-link"><span class="material-symbols-outlined icon-inline">person_add</span> Register here</a></p>
+    </div>
+</div>
 
 <?php require __DIR__ . '/footer.php'; ?>

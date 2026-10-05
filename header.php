@@ -16,32 +16,61 @@ $flash = get_flash();
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&family=Space+Mono:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+    <!-- Google Material Symbols Outlined -->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
     <!-- Neobrutalist Stylesheet -->
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
-    <header>
-        <h1>Blog Site</h1>
-        <nav>
-            <?php if ($currentUser): ?>
-                <span>Logged in as: <strong><?= e($currentUser['username']) ?></strong> (<?= e($currentUser['email']) ?>)</span>
-                <span>&middot;</span>
-                <a href="index.php">Home (News Feed)</a>
-                <span>&middot;</span>
-                <a href="logout.php">Logout</a>
-            <?php else: ?>
-                <a href="login.php">Login</a>
-                <span>&middot;</span>
-                <a href="register.php">Register</a>
-            <?php endif; ?>
-        </nav>
+    <header class="site-header">
+        <div class="header-inner">
+            <a href="index.php" class="brand-link">
+                <span class="brand-icon"><span class="material-symbols-outlined">bolt</span></span>
+                <span class="brand-name">Blog Site</span>
+                <span class="brand-badge">PDO CORE</span>
+            </a>
+            <nav class="site-nav">
+                <?php if ($currentUser): ?>
+                    <div class="user-pill">
+                        <span class="material-symbols-outlined icon-inline">account_circle</span>
+                        <span class="user-name"><?= e($currentUser['username']) ?></span>
+                        <span class="user-email">(<?= e($currentUser['email']) ?>)</span>
+                    </div>
+                    <a href="index.php" class="nav-btn">
+                        <span class="material-symbols-outlined icon-inline">feed</span>
+                        <span>Feed</span>
+                    </a>
+                    <a href="logout.php" class="nav-btn nav-btn-danger">
+                        <span class="material-symbols-outlined icon-inline">logout</span>
+                        <span>Logout</span>
+                    </a>
+                <?php else: ?>
+                    <a href="login.php" class="nav-btn">
+                        <span class="material-symbols-outlined icon-inline">login</span>
+                        <span>Sign In</span>
+                    </a>
+                    <a href="register.php" class="nav-btn nav-btn-accent">
+                        <span class="material-symbols-outlined icon-inline">person_add</span>
+                        <span>Register</span>
+                    </a>
+                <?php endif; ?>
+            </nav>
+        </div>
     </header>
 
     <?php if ($flash): ?>
-        <div class="flash-notice flash-<?= e($flash['type'] ?? 'info') ?>">
-            <p><strong>[<?= strtoupper(e($flash['type'] ?? 'notice')) ?>]:</strong> <?= e($flash['message']) ?></p>
+        <div class="flash-container">
+            <div class="flash-notice flash-<?= e($flash['type'] ?? 'info') ?>">
+                <span class="material-symbols-outlined flash-icon">
+                    <?= ($flash['type'] ?? '') === 'error' ? 'error' : 'check_circle' ?>
+                </span>
+                <div class="flash-text">
+                    <strong>[<?= strtoupper(e($flash['type'] ?? 'notice')) ?>]</strong>
+                    <span><?= e($flash['message']) ?></span>
+                </div>
+            </div>
         </div>
     <?php endif; ?>
 
-    <main>
+    <main class="site-main">
